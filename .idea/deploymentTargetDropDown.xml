@@ -5,6 +5,12 @@
       <entry key="DBHelperTest">
         <State />
       </entry>
+      <entry key="RouteDBHelperTest">
+        <State />
+      </entry>
+      <entry key="app">
+        <State />
+      </entry>
     </value>
   </component>
 </project>
