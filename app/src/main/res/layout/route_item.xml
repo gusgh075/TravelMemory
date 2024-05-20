@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- route_item_layout.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!-- 경로 이름 -->
+    <TextView
+        android:id="@+id/text_route_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:padding="8dp"/>
+
+    <!-- 경로 정보 (위도, 경도 등) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <!-- 위도 -->
+        <TextView
+            android:id="@+id/text_latitude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"/>
+
+        <!-- 경도 -->
+        <TextView
+            android:id="@+id/text_longitude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:layout_marginStart="16dp"/>
+
+        <!-- 여행 목록 -->
+        <TextView
+            android:id="@+id/text_travel_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:layout_marginStart="16dp"/>
+    </LinearLayout>
+
+    <!-- 기타 정보 (여행 순서, 평점 등) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <!-- 여행 순서 -->
+        <TextView
+            android:id="@+id/text_route_order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"/>
+
+        <!-- 평점 -->
+        <TextView
+            android:id="@+id/text_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:layout_marginStart="16dp"/>
+    </LinearLayout>
+
+    <!-- 리뷰 -->
+    <TextView
+        android:id="@+id/text_review"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:padding="8dp"/>
+
+    <!-- 사진 -->
+    <ImageView
+        android:id="@+id/image_photo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:padding="8dp"/>
+
+    <!-- 동행자 -->
+    <TextView
+        android:id="@+id/text_travel_companion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:padding="8dp"/>
+
+</LinearLayout>
