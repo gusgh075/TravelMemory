@@ -50,32 +50,7 @@ public class RouteDBHelper extends SQLiteOpenHelper {
         return result != -1;
     }
 
-    public ArrayList<RouteModel> getAllData() {
-        ArrayList<RouteModel> routes = new ArrayList<>();
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + RouteInfo.TABLE_NAME, null);
-
-        if (cursor.moveToFirst()) {
-            do {
-                String name = cursor.getString(cursor.getColumnIndexOrThrow(RouteInfo.COLUMN_NAME_NAME));
-                double latitude = cursor.getDouble(cursor.getColumnIndexOrThrow(RouteInfo.COLUMN_NAME_LATITUDE));
-                double longitude = cursor.getDouble(cursor.getColumnIndexOrThrow(RouteInfo.COLUMN_NAME_LONGITUDE));
-                int travelList = cursor.getInt(cursor.getColumnIndexOrThrow(RouteInfo.COLUMN_NAME_TRAVEL_LIST));
-                int routeOrder = cursor.getInt(cursor.getColumnIndexOrThrow(RouteInfo.COLUMN_NAME_ROUTE_ORDER));
-                int rating = cursor.getInt(cursor.getColumnIndexOrThrow(RouteInfo.COLUMN_NAME_RATING));
-                String review = cursor.getString(cursor.getColumnIndexOrThrow(RouteInfo.COLUMN_NAME_REVIEW));
-                String photoPath = cursor.getString(cursor.getColumnIndexOrThrow(RouteInfo.COLUMN_NAME_PHOTO_PATH));
-                String travelCompanion = cursor.getString(cursor.getColumnIndexOrThrow(RouteInfo.COLUMN_NAME_TRAVEL_COMPANION));
-
-                RouteModel route = new RouteModel(name, latitude, longitude, travelList, routeOrder, rating, review, photoPath, travelCompanion);
-                routes.add(route);
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        return routes;
-    }
-
-    public Cursor getAllCursor(){
+    public Cursor getAllData(){
         SQLiteDatabase db = this.getReadableDatabase();
         return db. rawQuery("SELECT * FROM " + RouteInfo.TABLE_NAME, null);
     }

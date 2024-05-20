@@ -3,10 +3,14 @@ package com.example.travelmemory.ui;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.example.travelmemory.R;
 import com.example.travelmemory.databinding.RouteItemBinding;
 import com.example.travelmemory.model.RouteModel;
 
@@ -24,7 +28,6 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.ViewHolder> 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // route_item 레이아웃 파일을 인플레이션하여 RouteItemBinding 객체를 생성합니다.
         RouteItemBinding binding = RouteItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new ViewHolder(binding);
     }
@@ -39,7 +42,7 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.ViewHolder> 
     public int getItemCount() {
         return mRouteModels.size();
     }
-    
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final RouteItemBinding binding;
 
@@ -56,14 +59,27 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.ViewHolder> 
             binding.textRouteOrder.setText(String.valueOf(route.getRouteOrder()));
             binding.textRating.setText(String.valueOf(route.getRating()));
             binding.textReview.setText(route.getReview());
-            // 사진 설정
-            // 이미지 로딩 라이브러리 등을 사용하여 이미지를 설정할 수 있습니다.
-            // 예: Glide 라이브러리 사용
-            // Glide.with(itemView.getContext())
-            //      .load(route.getPhotoPath())
-            //      .into(binding.imagePhoto);
+
+            String photoPath = route.getPhotoPath();
+            if (photoPath != null && !photoPath.isEmpty()) {
+                int resourceId = itemView.getContext().getResources().getIdentifier(photoPath, "drawable", itemView.getContext().getPackageName());
+                if (resourceId != 0) {
+                    Glide.with(itemView.getContext())
+                            .load(resourceId)
+                            .placeholder(R.drawable.placeholder_image)
+                            .error(R.drawable.error_image)
+                            .into(binding.imagePhoto);
+                } else {
+                    Glide.with(itemView.getContext())
+                            .load(R.drawable.default_image)
+                            .into(binding.imagePhoto);
+                }
+            } else {
+                Glide.with(itemView.getContext())
+                        .load(R.drawable.default_image)
+                        .into(binding.imagePhoto);
+            }
             binding.textTravelCompanion.setText(route.getTravelCompanion());
         }
     }
-
 }
