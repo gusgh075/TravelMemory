@@ -5,37 +5,43 @@ import android.content.ContentValues;
 import com.example.travelmemory.database.RouteInfo;
 
 public class RouteModel {
+    private int id;
     private String name;
     private double latitude;
     private double longitude;
-    private int travelList;
-    private int routeOrder;
+    private int travelId;
     private int rating;
     private String review;
     private String photoPath;
     private String travelCompanion;
 
     // 생성자
-    public RouteModel(String name, double latitude, double longitude,
-                      int travelList, int routeOrder, int rating,
-                      String review, String photoPath, String travelCompanion) {
+    public RouteModel(int id, String name, double latitude, double longitude,
+                      int travelId, int rating, String review,
+                      String photoPath, String travelCompanion) {
+        this.id = id;
         this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.travelList = travelList;
-        this.routeOrder = routeOrder;
+        this.travelId = travelId;
         this.rating = rating;
         this.review = review;
         this.photoPath = photoPath;
         this.travelCompanion = travelCompanion;
     }
+
+    public RouteModel(String name, double latitude, double longitude,
+                      int travelId, int rating, String review,
+                      String photoPath, String travelCompanion) {
+        this(-1, name, latitude, longitude, travelId, rating, review, photoPath, travelCompanion);
+    }
+
     public ContentValues toContentValues() {
         ContentValues values = new ContentValues();
         values.put(RouteInfo.COLUMN_NAME_NAME, name);
         values.put(RouteInfo.COLUMN_NAME_LATITUDE, latitude);
         values.put(RouteInfo.COLUMN_NAME_LONGITUDE, longitude);
-        values.put(RouteInfo.COLUMN_NAME_TRAVEL_LIST, travelList);
-        values.put(RouteInfo.COLUMN_NAME_ROUTE_ORDER, routeOrder);
+        values.put(RouteInfo.COLUMN_NAME_TRAVEL_ID, travelId);
         values.put(RouteInfo.COLUMN_NAME_RATING, rating);
         values.put(RouteInfo.COLUMN_NAME_REVIEW, review);
         values.put(RouteInfo.COLUMN_NAME_PHOTO_PATH, photoPath);
@@ -43,75 +49,38 @@ public class RouteModel {
         return values;
     }
 
+    public int getId() {
+        return id;
+    }
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-
     public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
-    }
-
-    public int getTravelList() {
-        return travelList;
-    }
-
-    public void setTravelList(int travelList) {
-        this.travelList = travelList;
-    }
-
-    public int getRouteOrder() {
-        return routeOrder;
-    }
-
-    public void setRouteOrder(int routeOrder) {
-        this.routeOrder = routeOrder;
+    public int getTravelId() {
+        return travelId;
     }
 
     public int getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
-        this.rating = rating;
-    }
-
     public String getReview() {
         return review;
-    }
-
-    public void setReview(String review) {
-        this.review = review;
     }
 
     public String getPhotoPath() {
         return photoPath;
     }
 
-    public void setPhotoPath(String photoPath) {
-        this.photoPath = photoPath;
-    }
-
     public String getTravelCompanion() {
         return travelCompanion;
-    }
-
-    public void setTravelCompanion(String travelCompanion) {
-        this.travelCompanion = travelCompanion;
     }
 }
