@@ -1,6 +1,5 @@
 package com.example.travelmemory.fragment;
 
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.travelmemory.database.RouteDBHelper;
-import com.example.travelmemory.database.RouteInfo;
 import com.example.travelmemory.databinding.FragmentRouteViewBinding;
 import com.example.travelmemory.model.RouteModel;
 import com.example.travelmemory.ui.RouteAdapter;
@@ -24,7 +22,7 @@ import com.example.travelmemory.ui.RouteAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TravelListFragment extends Fragment {
+public class RouteFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private RouteAdapter adapter;
@@ -48,29 +46,24 @@ public class TravelListFragment extends Fragment {
         routeDBHelper = RouteDBHelper.getInstance(getContext());
         // 임시 데이터
         routeDBHelper.clearData();
-        routeDBHelper.insertData("Sample Route 1", 37.7749, -122.4194, 1, 1, 5, "Beautiful place", "example1", "Friend A");
-        routeDBHelper.insertData("Sample Route 2", 34.0522, -118.2437, 1, 2, 4, "Nice view", "example2", "Friend B");
-        routeDBHelper.insertData("Sample Route 3", 40.7128, -74.0060, 1, 3, 3, "Good food", "example3", "Friend C");
+        routeDBHelper.insertData(new RouteModel(
+                1, "Route 1", 37.7749, -122.4194, 1, 5, "Great place!", "example1", "Alice"
+        ));
 
-        Cursor cursor = routeDBHelper.getAllData();
+        routeDBHelper.insertData(new RouteModel(
+                1, "Route 2", 34.0522, -118.2437, 1, 4, "Nice experience!", "example2", "Bob"
+        ));
 
-        routes = new ArrayList<>();
-        if (cursor.moveToFirst()) {
-            do {
-                String name = cursor.getString(cursor.getColumnIndexOrThrow(RouteInfo.COLUMN_NAME_NAME));
-                double latitude = cursor.getDouble(cursor.getColumnIndexOrThrow(RouteInfo.COLUMN_NAME_LATITUDE));
-                double longitude = cursor.getDouble(cursor.getColumnIndexOrThrow(RouteInfo.COLUMN_NAME_LONGITUDE));
-                int travelList = cursor.getInt(cursor.getColumnIndexOrThrow(RouteInfo.COLUMN_NAME_TRAVEL_LIST));
-                int routeOrder = cursor.getInt(cursor.getColumnIndexOrThrow(RouteInfo.COLUMN_NAME_ROUTE_ORDER));
-                int rating = cursor.getInt(cursor.getColumnIndexOrThrow(RouteInfo.COLUMN_NAME_RATING));
-                String review = cursor.getString(cursor.getColumnIndexOrThrow(RouteInfo.COLUMN_NAME_REVIEW));
-                String photoPath = cursor.getString(cursor.getColumnIndexOrThrow(RouteInfo.COLUMN_NAME_PHOTO_PATH));
-                String travelCompanion = cursor.getString(cursor.getColumnIndexOrThrow(RouteInfo.COLUMN_NAME_TRAVEL_COMPANION));
+        routeDBHelper.insertData(new RouteModel(
+                1, "Route 3", 40.7128, -74.0060, 1, 3, "Good but crowded.", "example3", "Charlie"
+        ));
+        routeDBHelper.insertData(new RouteModel(
+                1, "Route 3", 40.7128, -74.0060, 1, 3, "Good but crowded.", "example3", "Charlie"
+        ));
 
-                RouteModel route = new RouteModel(name, latitude, longitude, travelList, routeOrder, rating, review, photoPath, travelCompanion);
-                routes.add(route);
-            } while (cursor.moveToNext());
-        }
+
+        routes = routeDBHelper.getAllRoutes();
+
         adapter = new RouteAdapter(getActivity());
         recyclerView.setAdapter(adapter);
 
