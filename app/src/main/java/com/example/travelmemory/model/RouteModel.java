@@ -30,12 +30,6 @@ public class RouteModel {
         this.travelCompanion = travelCompanion;
     }
 
-    public RouteModel(String name, double latitude, double longitude,
-                      int travelId, int rating, String review,
-                      String photoPath, String travelCompanion) {
-        this(-1, name, latitude, longitude, travelId, rating, review, photoPath, travelCompanion);
-    }
-
     public ContentValues toContentValues() {
         ContentValues values = new ContentValues();
         values.put(RouteInfo.COLUMN_NAME_NAME, name);
