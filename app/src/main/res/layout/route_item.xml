@@ -2,62 +2,39 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="8dp"
     android:orientation="vertical"
-    android:padding="8dp"
-    android:layout_margin="8dp">
-
-    <!-- 경로 이름 -->
-    <TextView
-        android:id="@+id/route_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-
-    <!-- 여행 순서 -->
-    <TextView
-        android:id="@+id/route_order"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="14sp" />
-
-    <RatingBar
-        android:id="@+id/rating"
-        style="?android:attr/ratingBarStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:isIndicator="true"
-        android:max="5"
-        android:numStars="5"
-        android:stepSize="1" />
-
-    <!-- 리뷰 -->
-    <TextView
-        android:id="@+id/review"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="14sp" />
-
-    <!-- 사진 -->
-    <ImageView
-        android:id="@+id/photo_path"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:scaleType="centerCrop" />
+    android:padding="8dp">
 
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-
-        <!-- 동행자 -->
+        <!-- 경로 이름 -->
         <TextView
-            android:id="@+id/companion"
+            android:id="@+id/route_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+
+        <RatingBar
+            android:id="@+id/rating"
+            style="?android:attr/ratingBarStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
+            android:layout_below="@id/route_name"
+            android:isIndicator="true"
+            android:max="5"
+            android:numStars="5"
+            android:stepSize="1" />
+
+        <!-- 리뷰 -->
+        <TextView
+            android:id="@+id/review"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rating"
             android:textSize="14sp" />
 
         <!-- 수정 버튼 -->
@@ -66,9 +43,35 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="30dp"
-            android:text="수정" />
+            android:text="수정"
+            android:layout_margin="8dp"/>
     </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- 사진 -->
+        <ImageView
+            android:id="@+id/photo_path"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop" />
+
+        <!-- 동행자 -->
+        <TextView
+            android:id="@+id/companion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:textSize="14sp"
+            android:layout_margin="8dp"
+            android:textColor="#FFFFFF"
+            android:background="#66000000"
+            android:padding="4dp"/>
+    </RelativeLayout>
+
 
 </LinearLayout>

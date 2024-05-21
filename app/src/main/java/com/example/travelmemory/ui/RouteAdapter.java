@@ -57,8 +57,7 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.ViewHolder> 
         }
 
         public void bind(RouteModel route) {
-            binding.routeName.setText("여행 이름 : " + route.getName());
-            binding.routeOrder.setText("번호 : " + route.getRouteOrder());
+            binding.routeName.setText("장소 : " + route.getName());
             binding.rating.setRating(route.getRating());
             binding.review.setText("후기 : " + route.getReview());
 
