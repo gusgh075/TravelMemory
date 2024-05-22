@@ -76,17 +76,15 @@ public class RouteFragment extends Fragment {
 
         pageIndicatorLayout = binding.pageIndicatorLayout;
 
-
-        adapter = new RouteAdapter(getActivity());
+        adapter = new RouteAdapter(this.getContext());
         recyclerView.setAdapter(adapter);
-
         setupPageIndicator(binding.pageIndicatorLayout);
+        showPage(currentPage);
 
         // item별 구분선 추가
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), LinearLayoutManager.VERTICAL);
         recyclerView.addItemDecoration(dividerItemDecoration);
 
-        showPage(currentPage);
 
         return view;
     }
