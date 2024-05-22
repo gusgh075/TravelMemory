@@ -1,13 +1,18 @@
 package com.example.travelmemory.ui;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.travelmemory.R;
 import com.example.travelmemory.databinding.RouteItemBinding;
@@ -61,30 +66,49 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.ViewHolder> 
             binding.rating.setRating(route.getRating());
             binding.review.setText("후기 : " + route.getReview());
 
-            int targetWidth = binding.photoPath.getWidth();
             String photoPath = route.getPhotoPath();
-            if (photoPath != null && !photoPath.isEmpty()) {
-                int resourceId = itemView.getContext().getResources().getIdentifier(photoPath, "drawable", itemView.getContext().getPackageName());
-                if (resourceId != 0) {
-                    Glide.with(itemView.getContext())
-                            .load(resourceId)
-                            .override(targetWidth, Target.SIZE_ORIGINAL)
-                            .placeholder(R.drawable.placeholder_image)
-                            .error(R.drawable.error_image)
-                            .into(binding.photoPath);
-                } else {
-                    Glide.with(itemView.getContext())
-                            .load(R.drawable.default_image)
-                            .override(targetWidth, Target.SIZE_ORIGINAL)
-                            .into(binding.photoPath);
-                }
-            } else {
-                Glide.with(itemView.getContext())
-                        .load(R.drawable.default_image)
-                        .override(targetWidth, Target.SIZE_ORIGINAL)
-                        .into(binding.photoPath);
+
+            // Check if the listener is already added to avoid duplicate listeners
+            if (!binding.photoPath.getViewTreeObserver().isAlive()) {
+                return;
             }
+
+            binding.photoPath.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    // Ensure this code only runs once by removing the listener
+                    binding.photoPath.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+                    int targetWidth = binding.photoPath.getWidth();
+
+                    // Now load the image with Glide
+                    if (photoPath != null && !photoPath.isEmpty()) {
+                        int resourceId = itemView.getContext().getResources().getIdentifier(photoPath, "drawable", itemView.getContext().getPackageName());
+                        if (resourceId != 0) {
+                            Glide.with(itemView.getContext())
+                                    .load(resourceId)
+                                    .override(targetWidth, Target.SIZE_ORIGINAL)  // Set the width
+                                    .placeholder(R.drawable.placeholder_image)
+                                    .error(R.drawable.error_image)
+                                    .into(binding.photoPath);
+                        } else {
+                            Glide.with(itemView.getContext())
+                                    .load(R.drawable.default_image)
+                                    .override(targetWidth, Target.SIZE_ORIGINAL)
+                                    .into(binding.photoPath);
+                        }
+                    } else {
+                        Glide.with(itemView.getContext())
+                                .load(R.drawable.default_image)
+                                .override(targetWidth, Target.SIZE_ORIGINAL)
+                                .into(binding.photoPath);
+                    }
+                }
+            });
+
             binding.companion.setText("동행자 : " + route.getTravelCompanion());
         }
+
+
     }
 }
