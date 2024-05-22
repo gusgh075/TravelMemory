@@ -10,22 +10,22 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.travelmemory.database.RouteDBHelper;
+import com.example.travelmemory.R;
+import com.example.travelmemory.RecyclerViewInterface;
 import com.example.travelmemory.database.TravelDBHelper;
 import com.example.travelmemory.databinding.FragmentTravelViewBinding;
-import com.example.travelmemory.model.RouteModel;
 import com.example.travelmemory.model.TravelModel;
-import com.example.travelmemory.ui.RouteAdapter;
 import com.example.travelmemory.ui.TravelAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TravelFragment extends Fragment {
+public class TravelFragment extends Fragment implements RecyclerViewInterface {
     private RecyclerView recyclerView;
     private TravelAdapter adapter;
     private TravelDBHelper travelDBHelper;
@@ -51,7 +51,7 @@ public class TravelFragment extends Fragment {
 
         travels = travelDBHelper.getAllTravels();
 
-        adapter = new TravelAdapter(getActivity());
+        adapter = new TravelAdapter(this.getContext(),this);
         recyclerView.setAdapter(adapter);
 
         setupPageIndicator(binding.pageIndicatorLayout);
@@ -87,5 +87,14 @@ public class TravelFragment extends Fragment {
         List<TravelModel> currentItems = travels.subList(start, end);
         ArrayList<TravelModel> pageItems = new ArrayList<>(currentItems);
         adapter.setPageItems(pageItems);
+    }
+
+    @Override
+    public void onItemClicked(TravelModel travelModel){
+        RouteFragment routeFragment = RouteFragment.newInstance(travelModel.getId());
+        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, routeFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }

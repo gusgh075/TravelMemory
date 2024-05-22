@@ -30,7 +30,40 @@ public class RouteFragment extends Fragment {
     private LinearLayout pageIndicatorLayout;
     private int currentPage = 1;
     private int itemsPerPage = 1;
+    private int travelId;
     private ArrayList<RouteModel> routes;
+
+    public static RouteFragment newInstance(int travelId) {
+        RouteFragment fragment = new RouteFragment();
+        Bundle args = new Bundle();
+        args.putInt("travel_id", travelId);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            travelId = getArguments().getInt("travel_id");
+        }
+
+        routeDBHelper = RouteDBHelper.getInstance(getContext());
+        // 임시 데이터
+        routeDBHelper.clearData();
+        routeDBHelper.insertData(new RouteModel(
+                "Route 1", 37.7749, -122.4194, 1, 5, "Great place!", "example1", "Alice"
+        ));
+
+        routeDBHelper.insertData(new RouteModel(
+                "Route 2", 34.0522, -118.2437, 1, 4, "Nice experience!", "example2", "Bob"
+        ));
+
+        routeDBHelper.insertData(new RouteModel(
+                "Route 3", 40.7128, -74.0060, 2, 3, "Good but crowded.", "example3", "Charlie"
+        ));
+        routes = routeDBHelper.getRouteByTravelId(travelId);
+    }
 
     @Nullable
     @Override
@@ -39,30 +72,10 @@ public class RouteFragment extends Fragment {
         View view = binding.getRoot();
 
         recyclerView = binding.recyclerView;
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
         pageIndicatorLayout = binding.pageIndicatorLayout;
 
-        routeDBHelper = RouteDBHelper.getInstance(getContext());
-        // 임시 데이터
-        routeDBHelper.clearData();
-        routeDBHelper.insertData(new RouteModel(
-                1, "Route 1", 37.7749, -122.4194, 1, 5, "Great place!", "example1", "Alice"
-        ));
-
-        routeDBHelper.insertData(new RouteModel(
-                1, "Route 2", 34.0522, -118.2437, 1, 4, "Nice experience!", "example2", "Bob"
-        ));
-
-        routeDBHelper.insertData(new RouteModel(
-                1, "Route 3", 40.7128, -74.0060, 1, 3, "Good but crowded.", "example3", "Charlie"
-        ));
-        routeDBHelper.insertData(new RouteModel(
-                1, "Route 3", 40.7128, -74.0060, 1, 3, "Good but crowded.", "example3", "Charlie"
-        ));
-
-
-        routes = routeDBHelper.getAllRoutes();
 
         adapter = new RouteAdapter(getActivity());
         recyclerView.setAdapter(adapter);

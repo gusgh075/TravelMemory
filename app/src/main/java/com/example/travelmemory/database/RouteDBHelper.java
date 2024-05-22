@@ -94,6 +94,32 @@ public class RouteDBHelper extends SQLiteOpenHelper {
         }
     }
 
+    // 데이터베이스에서 RouteModel 객체를 반환하는 메서드
+    public ArrayList<RouteModel> getRouteByTravelId(int travelId) {
+        ArrayList<RouteModel> routeModels = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(RouteInfo.TABLE_NAME, null, RouteInfo.COLUMN_NAME_TRAVEL_ID + " = ?", new String[]{String.valueOf(travelId)}, null, null, null);
+
+        if (cursor != null) {
+            while ((cursor.moveToNext())) {
+                RouteModel route = new RouteModel(
+                        cursor.getInt(cursor.getColumnIndexOrThrow(RouteInfo.COLUMN_NAME_ID)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(RouteInfo.COLUMN_NAME_NAME)),
+                        cursor.getDouble(cursor.getColumnIndexOrThrow(RouteInfo.COLUMN_NAME_LATITUDE)),
+                        cursor.getDouble(cursor.getColumnIndexOrThrow(RouteInfo.COLUMN_NAME_LONGITUDE)),
+                        cursor.getInt(cursor.getColumnIndexOrThrow(RouteInfo.COLUMN_NAME_TRAVEL_ID)),
+                        cursor.getInt(cursor.getColumnIndexOrThrow(RouteInfo.COLUMN_NAME_RATING)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(RouteInfo.COLUMN_NAME_REVIEW)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(RouteInfo.COLUMN_NAME_PHOTO_PATH)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(RouteInfo.COLUMN_NAME_TRAVEL_COMPANION))
+                );
+                routeModels.add(route);
+            }
+            cursor.close();
+        }
+        return routeModels;
+    }
+
     // 데이터베이스에서 모든 RouteModel 객체를 반환하는 메서드
     public ArrayList<RouteModel> getAllRoutes() {
         ArrayList<RouteModel> routes = new ArrayList<>();
