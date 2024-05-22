@@ -48,6 +48,7 @@ public class TravelFragment extends Fragment implements RecyclerViewInterface {
 
         travelDBHelper.clearData();
         travelDBHelper.insertData(new TravelModel("first Travel", "2024-05-21", "John"));
+        travelDBHelper.insertData(new TravelModel("second Travel", "2024-05-22", "Steve"));
 
         travels = travelDBHelper.getAllTravels();
 
