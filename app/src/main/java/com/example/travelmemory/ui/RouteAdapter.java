@@ -67,47 +67,45 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.ViewHolder> 
             binding.review.setText("후기 : " + route.getReview());
 
             String photoPath = route.getPhotoPath();
+            if (photoPath != null && !photoPath.isEmpty()) {
+                // Ensure the ViewTreeObserver is alive before accessing it
+                ViewTreeObserver observer = binding.photoPath.getViewTreeObserver();
+                if (observer.isAlive()) {
+                    observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                        @Override
+                        public void onGlobalLayout() {
+                            // Get the width of the photoPath ImageView
+                            int targetWidth = binding.photoPath.getWidth();
 
-            // Check if the listener is already added to avoid duplicate listeners
-            if (!binding.photoPath.getViewTreeObserver().isAlive()) {
-                return;
-            }
+                            // Ensure to remove the listener after the layout is done
+                            binding.photoPath.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 
-            binding.photoPath.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                @Override
-                public void onGlobalLayout() {
-                    // Ensure this code only runs once by removing the listener
-                    binding.photoPath.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-
-                    int targetWidth = binding.photoPath.getWidth();
-
-                    // Now load the image with Glide
-                    if (photoPath != null && !photoPath.isEmpty()) {
-                        int resourceId = itemView.getContext().getResources().getIdentifier(photoPath, "drawable", itemView.getContext().getPackageName());
-                        if (resourceId != 0) {
-                            Glide.with(itemView.getContext())
-                                    .load(resourceId)
-                                    .override(targetWidth, Target.SIZE_ORIGINAL)  // Set the width
-                                    .placeholder(R.drawable.placeholder_image)
-                                    .error(R.drawable.error_image)
-                                    .into(binding.photoPath);
-                        } else {
-                            Glide.with(itemView.getContext())
-                                    .load(R.drawable.default_image)
-                                    .override(targetWidth, Target.SIZE_ORIGINAL)
-                                    .into(binding.photoPath);
+                            // Load image using Glide
+                            int resourceId = itemView.getContext().getResources().getIdentifier(photoPath, "drawable", itemView.getContext().getPackageName());
+                            if (resourceId != 0) {
+                                Glide.with(itemView.getContext())
+                                        .load(resourceId)
+                                        .override(targetWidth, Target.SIZE_ORIGINAL)
+                                        .placeholder(R.drawable.placeholder_image)
+                                        .error(R.drawable.error_image)
+                                        .into(binding.photoPath);
+                            } else {
+                                Glide.with(itemView.getContext())
+                                        .load(R.drawable.default_image)
+                                        .override(targetWidth, Target.SIZE_ORIGINAL)
+                                        .into(binding.photoPath);
+                            }
                         }
-                    } else {
-                        Glide.with(itemView.getContext())
-                                .load(R.drawable.default_image)
-                                .override(targetWidth, Target.SIZE_ORIGINAL)
-                                .into(binding.photoPath);
-                    }
+                    });
                 }
-            });
-
+            } else {
+                Glide.with(itemView.getContext())
+                        .load(R.drawable.default_image)
+                        .into(binding.photoPath);
+            }
             binding.companion.setText("동행자 : " + route.getTravelCompanion());
         }
+
 
 
     }
