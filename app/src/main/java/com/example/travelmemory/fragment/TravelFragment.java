@@ -16,10 +16,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.travelmemory.R;
-import com.example.travelmemory.RecyclerViewInterface;
 import com.example.travelmemory.database.TravelDBHelper;
 import com.example.travelmemory.databinding.FragmentTravelViewBinding;
 import com.example.travelmemory.model.TravelModel;
+import com.example.travelmemory.ui.RecyclerViewInterface;
 import com.example.travelmemory.ui.TravelAdapter;
 
 import java.util.ArrayList;
@@ -29,10 +29,14 @@ public class TravelFragment extends Fragment implements RecyclerViewInterface {
     private RecyclerView recyclerView;
     private TravelAdapter adapter;
     private TravelDBHelper travelDBHelper;
-    private LinearLayout pageIndicatorLayout;
     private int currentPage = 1;
     private int itemsPerPage = 3;
     private ArrayList<TravelModel> travels;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -42,13 +46,7 @@ public class TravelFragment extends Fragment implements RecyclerViewInterface {
         recyclerView = binding.recyclerView;
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        pageIndicatorLayout = binding.pageIndicatorLayout;
-
         travelDBHelper = travelDBHelper.getInstance(getContext());
-
-        travelDBHelper.clearData();
-        travelDBHelper.insertData(new TravelModel("first Travel", "2024-05-21", "John"));
-        travelDBHelper.insertData(new TravelModel("second Travel", "2024-05-22", "Steve"));
 
         travels = travelDBHelper.getAllTravels();
 
@@ -65,7 +63,14 @@ public class TravelFragment extends Fragment implements RecyclerViewInterface {
 
         return view;
     }
-
+    @Override
+    public void onItemClicked(TravelModel travelModel){
+        RouteFragment routeFragment = RouteFragment.newInstance(travelModel.getId());
+        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, routeFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
     private void setupPageIndicator(LinearLayout pageIndicatorLayout) {
         pageIndicatorLayout.removeAllViews();
         int totalItems = travels.size();
@@ -90,12 +95,5 @@ public class TravelFragment extends Fragment implements RecyclerViewInterface {
         adapter.setPageItems(pageItems);
     }
 
-    @Override
-    public void onItemClicked(TravelModel travelModel){
-        RouteFragment routeFragment = RouteFragment.newInstance(travelModel.getId());
-        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, routeFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
+
 }

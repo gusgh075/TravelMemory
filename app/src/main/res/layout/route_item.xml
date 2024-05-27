@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><!-- route_item_layout.xml -->
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -9,14 +9,26 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-        <!-- 경로 이름 -->
+
+        <!-- 경로 이름 (TextView) -->
         <TextView
             android:id="@+id/route_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_toStartOf="@id/edit_btn"
             android:textSize="18sp"
             android:textStyle="bold" />
 
+        <!-- 경로 이름 (EditText) -->
+        <EditText
+            android:id="@+id/edit_route_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@id/edit_btn"
+            android:hint="장소 : "
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:visibility="invisible" />
 
         <RatingBar
             android:id="@+id/rating"
@@ -29,6 +41,18 @@
             android:numStars="5"
             android:stepSize="1" />
 
+        <RatingBar
+            android:id="@+id/edit_rating"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_route_name"
+            android:isIndicator="false"
+            android:max="5"
+            android:numStars="0"
+            android:stepSize="1"
+            android:visibility="invisible" />
+
         <!-- 리뷰 -->
         <TextView
             android:id="@+id/review"
@@ -37,14 +61,32 @@
             android:layout_below="@id/rating"
             android:textSize="14sp" />
 
+        <EditText
+            android:id="@+id/edit_review"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_rating"
+            android:hint="후기 : "
+            android:textSize="14sp"
+            android:visibility="invisible" />
+
         <!-- 수정 버튼 -->
         <Button
             android:id="@+id/edit_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:text="수정"
-            android:layout_margin="8dp"/>
+            android:layout_margin="8dp"
+            android:text="수정" />
+        <!-- 완료 버튼 -->
+        <Button
+            android:id="@+id/post_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="8dp"
+            android:text="완료"
+            android:visibility="invisible"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -53,7 +95,7 @@
 
         <!-- 사진 -->
         <ImageView
-            android:id="@+id/photo_path"
+            android:id="@+id/photo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
@@ -66,12 +108,25 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:textSize="14sp"
             android:layout_margin="8dp"
-            android:textColor="#FFFFFF"
             android:background="#66000000"
-            android:padding="4dp"/>
+            android:padding="4dp"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/edit_companion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="8dp"
+            android:background="#666E6E6E"
+            android:hint="동행자 : "
+            android:textColorHint="#FFFFFF"
+            android:padding="4dp"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:visibility="invisible" />
     </RelativeLayout>
-
-
 </LinearLayout>

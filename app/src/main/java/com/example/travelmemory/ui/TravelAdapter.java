@@ -9,7 +9,6 @@ import android.widget.RelativeLayout;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.travelmemory.RecyclerViewInterface;
 import com.example.travelmemory.databinding.TravelItemBinding;
 import com.example.travelmemory.model.TravelModel;
 
@@ -59,7 +58,7 @@ public class TravelAdapter extends RecyclerView.Adapter<TravelAdapter.ViewHolder
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TravelItemBinding binding;
-        private RelativeLayout relativeLayout;
+        private final RelativeLayout relativeLayout;
         public ViewHolder(TravelItemBinding binding) {
             super(binding.getRoot());
             this.binding = binding;

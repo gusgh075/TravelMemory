@@ -1,4 +1,4 @@
-package com.example.travelmemory;
+package com.example.travelmemory.ui;
 
 import com.example.travelmemory.model.TravelModel;
 

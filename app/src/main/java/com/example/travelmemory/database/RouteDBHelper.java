@@ -59,6 +59,7 @@ public class RouteDBHelper extends SQLiteOpenHelper {
     }
 
     public boolean updateData(RouteModel routeModel) {
+        System.out.println("updateData호출");
         SQLiteDatabase db = getWritableDatabase();
         ContentValues contentValues = routeModel.toContentValues();
         return db.update(RouteInfo.TABLE_NAME, contentValues, RouteInfo.COLUMN_NAME_ID + " = ?", new String[]{String.valueOf(routeModel.getId())}) > 0;
@@ -71,7 +72,6 @@ public class RouteDBHelper extends SQLiteOpenHelper {
         onCreate(db); // 테이블 재생성
     }
 
-    // 데이터베이스에서 RouteModel 객체를 반환하는 메서드
     public RouteModel getRouteById(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(RouteInfo.TABLE_NAME, null, RouteInfo.COLUMN_NAME_ID + " = ?", new String[]{String.valueOf(id)}, null, null, null);
@@ -143,5 +143,21 @@ public class RouteDBHelper extends SQLiteOpenHelper {
             cursor.close();
         }
         return routes;
+    }
+
+    /**
+     * 임시 데이터를 넣는 메소드
+     */
+    public void insertExData() {
+        clearData();
+        insertData(new RouteModel(
+                "Route 1", 37.7749, -122.4194, 1, 5, "Great place!", "example1", "Alice"
+        ));
+        insertData(new RouteModel(
+                "Route 2", 34.0522, -118.2437, 1, 4, "Nice experience!", "example2", "Bob"
+        ));
+        insertData(new RouteModel(
+                "Route 3", 40.7128, -74.0060, 2, 3, "Good but crowded.", "example3", "Charlie"
+        ));
     }
 }

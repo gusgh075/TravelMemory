@@ -91,4 +91,36 @@ public class RouteModel {
     public String getTravelCompanion() {
         return travelCompanion;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public void setTravelId(int travelId) {
+        this.travelId = travelId;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    public void setReview(String review) {
+        this.review = review;
+    }
+
+    public void setPhotoPath(String photoPath) {
+        this.photoPath = photoPath;
+    }
+
+    public void setTravelCompanion(String travelCompanion) {
+        this.travelCompanion = travelCompanion;
+    }
 }

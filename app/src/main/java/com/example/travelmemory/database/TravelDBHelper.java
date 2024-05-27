@@ -108,4 +108,13 @@ public class TravelDBHelper extends SQLiteOpenHelper {
         }
         return travels;
     }
+
+    /**
+     * 임시 데이터 삽입
+     */
+    public void insertExData() {
+        clearData();
+        insertData(new TravelModel("first Travel", "2024-05-21", "John"));
+        insertData(new TravelModel("second Travel", "2024-05-22", "Steve"));
+    }
 }
